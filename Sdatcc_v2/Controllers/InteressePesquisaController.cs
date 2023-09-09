@@ -34,7 +34,7 @@ namespace Sdatcc_v2.Controllers
 				{
 					Nome = interesse.Nome,
 					Email = interesse.Email,
-					//assunto = interesse.Assunto
+					assunto = interesse.Assunto
 				};
 
 				_myDbContext.InteressePesquisa.Add(interesseEntity);

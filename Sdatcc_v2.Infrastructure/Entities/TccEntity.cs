@@ -9,9 +9,10 @@ namespace Sdatcc_v2.Infrastructure.Entities
 	{
 		[Key]
 		public int Id { get; set; }
-		public string Titulo{ get; set; }
+		public string Titulo { get; set; }
 		public DateTime DataDefesa { get; set; }
 		public string AreaEstudo { get; set; }
+		public int ArquivoId { get; set; }
 		public ArquivoEntity Arquivo { get; set; }
 		public int AlunoId { get; set; }
 		public virtual AlunoEntity Aluno { get; set; }

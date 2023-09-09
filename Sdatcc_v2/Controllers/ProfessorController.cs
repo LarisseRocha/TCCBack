@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using Sdatcc_v2.Domain;
 using Sdatcc_v2.Infrastructure;
 using Sdatcc_v2.Infrastructure.Entities;
-using Microsoft.AspNetCore.Authorization;
-using System;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -50,12 +48,11 @@ namespace Sdatcc_v2.Controllers
 
         // POST api/<ProfessorController>
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> CadastrarProfessor([FromBody] Professor value)
         {
            ProfessorEntity professorEntity = new ProfessorEntity();
            professorEntity.Nome = value.Nome;
-           professorEntity.DataNascimento = Convert.ToDateTime(value.DataNascimento);
+           professorEntity.DataNascimento = value.DataNascimento;
            professorEntity.Cpf = Regex.Replace(value.Cpf, "[^0-9]", "");
            professorEntity.Email = value.Email;
            professorEntity.Senha= value.Senha;

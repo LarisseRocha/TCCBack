@@ -12,7 +12,7 @@ using Sdatcc_v2.Infrastructure;
 namespace Sdatcc_v2.Infrastructure.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20230908180315_InitialCreate")]
+    [Migration("20230909150440_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -86,13 +86,13 @@ namespace Sdatcc_v2.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Assunto")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("assunto")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -167,7 +167,7 @@ namespace Sdatcc_v2.Infrastructure.Migrations
                     b.Property<string>("AreaEstudo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ArquivoId")
+                    b.Property<int>("ArquivoId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DataDefesa")
@@ -200,7 +200,9 @@ namespace Sdatcc_v2.Infrastructure.Migrations
 
                     b.HasOne("Sdatcc_v2.Infrastructure.Entities.ArquivoEntity", "Arquivo")
                         .WithMany()
-                        .HasForeignKey("ArquivoId");
+                        .HasForeignKey("ArquivoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Sdatcc_v2.Infrastructure.Entities.ProfessorEntity", "Professor")
                         .WithMany()

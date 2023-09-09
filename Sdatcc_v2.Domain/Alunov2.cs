@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Sdatcc_v2.Domain
 {
-   public class Alunov2
+   public  class Alunov2
     {
         public string Nome { get; set; }
         public string Email { get; set; }

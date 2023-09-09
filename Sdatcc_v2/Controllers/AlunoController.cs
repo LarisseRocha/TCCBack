@@ -8,7 +8,6 @@ using Microsoft.VisualBasic;
 using Sdatcc_v2.Domain;
 using Sdatcc_v2.Infrastructure;
 using Sdatcc_v2.Infrastructure.Entities;
-using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -52,7 +51,6 @@ namespace Sdatcc_v2.Controllers
 
         // POST api/<AlunoController>
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> CadastrarAluno([FromBody] Aluno value)
         {             
 
@@ -71,10 +69,10 @@ namespace Sdatcc_v2.Controllers
             }
            
             alunoEntity.Email = value.Email;
-            alunoEntity.DataNascimento = Convert.ToDateTime(value.DataNascimento);
+            alunoEntity.DataNascimento = value.DataNascimento;
             alunoEntity.NumeroMatricula = value.NumeroMatricula;
             alunoEntity.Senha = value.Senha;
-            alunoEntity.Cpf = value.Cpf;
+            value.Senha = value.Senha;
             _myDbContext.Alunos.Add(alunoEntity);
              await _myDbContext.SaveChangesAsync();
 

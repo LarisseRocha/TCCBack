@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Sdatcc_v2.Domain;
 using Sdatcc_v2.Infrastructure;
 using Sdatcc_v2.Infrastructure.Entities;
-using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -34,16 +33,35 @@ namespace Sdatcc_v2.Controllers
             return Ok(dados);
         }
 
-        [HttpPost("{ConsultarTcc}")]
-        [AllowAnonymous]
-		public IActionResult ConsultarTcc([FromBody] ConsultarTccCommand command)
+        // GET api/<TccController>/5
+        [HttpGet("{id}")]
+        public string Get(int id)
         {
-	        var listTcc = _myDbContext.ConsultaTcc(command);
-	        if (listTcc == null)
+            return "value";
+        }
+
+        [HttpGet("{BuscarTccPorTitulo}")]
+        public IActionResult BuscarTccPorTitulo(string Titulo)
+        {
+	        var tcc = _myDbContext.Tccs.FirstOrDefault(c => c.Titulo == Titulo);
+	        if (tcc == null)
 	        {
 		        return NotFound();
 	        }
-	        return Ok(listTcc);
+
+	        return Ok(tcc);
+        }
+
+        [HttpGet("{BuscarTccPorAreaEstudo}")]
+        public IActionResult BuscarTccPorAreaEstudo(string AreaEstudo)
+        {
+	        var tcc = _myDbContext.Tccs.FirstOrDefault(c => c.AreaEstudo == AreaEstudo);
+	        if (tcc == null)
+	        {
+		        return NotFound();
+	        }
+
+	        return Ok(tcc);
         }
 
 

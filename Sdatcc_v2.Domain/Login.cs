@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sdatcc_v2.Domain
 {
-    public class LoginDto
+    public class Login
     {
         public string Cpf { get; set; }
         public string Senha { get; set; }

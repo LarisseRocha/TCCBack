@@ -1,15 +1,17 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Graph.Models;
+using Sdatcc_v2.Domain;
 using Sdatcc_v2.Infrastructure;
 using Sdatcc_v2.Infrastructure.Entities;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using Sdatcc_v2.Infrastructure.Services;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System;
 using System.Text;
-using Sdatcc_v2.Infrastructure.Services;
-using Sdatcc_v2.Domain;
-using Microsoft.Graph.Models;
-using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,34 +24,24 @@ namespace Sdatcc_v2.Controllers
 	public class LoginController : ControllerBase
 	{
 		private MyDbContext _myDbContext;
-        private readonly TokenService _tokenService;
-        
-		public LoginController(MyDbContext myDbContext, TokenService tokenService)
+		private readonly ILoginService _loginService;
+		private readonly LoginEntity _login;
+		public LoginController(MyDbContext myDbContext, ILoginService loginService)
 		{
+
 			_myDbContext = myDbContext;
-            _tokenService = tokenService;
-        }
-		
-		[HttpPost("authenticate")]
-		public async Task<IActionResult> LoginAsync([FromBody] LoginDto paramLoginDto)
+			_loginService = loginService;
+
+		}
+
+
+		[AllowAnonymous]
+		[Route("authenticate")]
+		[HttpPost]
+		public JsonResult Login([FromBody] LoginDto user)
 		{
-			var aluno = await _myDbContext.LoginAlunoAsync(paramLoginDto);
-            var professor = await _myDbContext.LoginProfessorAsync(paramLoginDto);
-			string token;
-			if (aluno != null)
-			{
-				token = _tokenService.GenerateToken(aluno);
-				return Ok(token);
-			}
-			else if (professor != null)
-			{
-                token = _tokenService.GenerateToken(professor);
-				return Ok(token);
-			}
-			else 
-			{
-                return Unauthorized("");
-            }
+			var token = _loginService.Authenticate(user.Cpf, user.Senha);
+			return new JsonResult(token);
 		}
 
 		[HttpPost]
@@ -58,7 +50,7 @@ namespace Sdatcc_v2.Controllers
 			try
 			{
 				var tokenHandler = new JwtSecurityTokenHandler();
-				var key = Encoding.ASCII.GetBytes("LarisseBatistadeMeeloRocha");
+				var key = Encoding.ASCII.GetBytes("xLarisseBatistadeMeloRochax");
 				var tokenValidationParameters = new TokenValidationParameters
 				{
 					ValidateIssuer = false, // Defina como true se desejar validar o emissor (issuer) do token
@@ -85,5 +77,14 @@ namespace Sdatcc_v2.Controllers
 			}
 		}
 
+	}
+
+	
+
+
+	public class LoginDto
+	{
+		public string Cpf { get; set; }
+		public string Senha { get; set; }
 	}
 }

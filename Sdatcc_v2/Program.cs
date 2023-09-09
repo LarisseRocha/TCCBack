@@ -16,11 +16,16 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 const string allowOrigins = "_allowAllOrigins";
-// 
+// Add services to the container.
 
 builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+//Carregar a configuração do arquivo appsettings.json
+// builder.Configuration.AddJsonFile("appsettings.json");
+/*builder.Services.AddDbContext<MyDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MyDbContext")));*/
 builder.Services.AddDbContext<MyDbContext>(opt => opt.UseSqlServer("Persist Security Info=False;Integrated Security=true;Initial Catalog=sdatccdb;server=LROCHA-N2; TrustServerCertificate=true"));
-builder.Services.AddTransient<TokenService>();
+builder.Services.AddTransient<ILoginService, LoginService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAuthentication(x =>
@@ -34,7 +39,7 @@ builder.Services.AddAuthentication(x =>
 	x.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
 	{
 		ValidateIssuerSigningKey = true,
-		IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("LarisseBatistadeMeeloRocha")),//builder.Configuration["JwtCredentials:Key"]
+		IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("xLarisseBatistadeMeloRochax")),//builder.Configuration["JwtCredentials:Key"]
 		ValidateIssuer = false,
 		ValidateAudience = false
 	};

@@ -44,6 +44,19 @@ namespace Sdatcc_v2.Controllers
 
 		}
 
+		/// <summary>
+		/// Realizar a busca de todos os TCCs
+		/// </summary>
+		/// <returns></returns>
+		[Authorize]
+		[HttpGet("BuscarTccs")]
+		public async Task<IActionResult> BuscarTccs()
+		{
+			var arq = _myDbContext.Arquivos;
+			return Ok(arq);
+		}
+
+
 		[HttpGet("DownloadAll")]
 		public IActionResult DownloadTodosArquivos()
 		{
@@ -175,7 +188,7 @@ namespace Sdatcc_v2.Controllers
 				string filePath = arquivo.CaminhoArquivo;
 				string fileName = arquivo.NomeOriginal;
 				
-				byte[] fileBytes = System.IO.File.ReadAllBytes(filePath + fileName);
+				byte[] fileBytes = System.IO.File.ReadAllBytes(filePath + "/" + fileName +".pdf");
 
 				return File(fileBytes, "application/force-download", fileName);
 
