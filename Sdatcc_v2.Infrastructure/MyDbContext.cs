@@ -69,8 +69,9 @@ namespace Sdatcc_v2.Infrastructure
 
                 //  string cnnString = "Persist Security Info=False;Integrated Security=true;Initial Catalog=sdatccdb;server=(LocalDb)\\MSSQLLocalDB";
                 //optionsBuilder.UseSqlServer(cnnString);
-                string cnnString = "Persist Security Info=False;Integrated Security=true;Initial Catalog=sdatccdbv2;server=(LocalDb)\\MSSQLLocalDB";
-                optionsBuilder.UseSqlServer(cnnString);
+                string cnnString = "Server=sdatcc-srv.database.windows.net;Database=sdatcc;User Id=larisse;Password=Blumenau2024.*";
+
+				optionsBuilder.UseSqlServer(cnnString);
             }
 
         }

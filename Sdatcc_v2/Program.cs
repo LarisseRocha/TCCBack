@@ -24,7 +24,7 @@ builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.Re
 // builder.Configuration.AddJsonFile("appsettings.json");
 /*builder.Services.AddDbContext<MyDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MyDbContext")));*/
-builder.Services.AddDbContext<MyDbContext>(opt => opt.UseSqlServer("Persist Security Info=False;Integrated Security=true;Initial Catalog=sdatccdb;server=LROCHA-N2; TrustServerCertificate=true"));
+//builder.Services.AddDbContext<MyDbContext>(opt => opt.UseSqlServer("Persist Security Info=False;Integrated Security=true;Initial Catalog=sdatcc;server=sdatcc-srv.database.windows.net; TrustServerCertificate=true"));
 builder.Services.AddTransient<ILoginService, LoginService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
